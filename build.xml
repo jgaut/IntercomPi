@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="IntercomPi">
+    <property environment="env"/>
+    <property name="src.link" value="../../workspace/IntercomPi/src"/>
+    <property name="JRE_LIB" value="../../../../../System/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Classes/classes.jar"/>
+    <property name="ECLIPSE_HOME" value="../../Android/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Users/jeremy/Bittorent Sync/workspace/IntercomPi/bin.libraryclasspath"/>
+    <path id="intercomPi.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="${JRE_LIB}"/>
+        <path refid="Users/jeremy/Bittorent Sync/workspace/IntercomPi/bin.libraryclasspath"/>
+        <pathelement location="../../workspace/IntercomPi/ExterneJar/jsch-0.1.51.jar"/>
+        <pathelement location="../../workspace/IntercomPi/ExterneJar/gson-2.2.4.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="${src.link}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="${src.link}"/>
+            <classpath refid="intercomPi.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+	<target description="create jar file" name="Create-Jar" depends="build-eclipse-compiler">
+	         
+	        <delete dir="jar"/>
+	         
+	        <jar destfile="jar/IntercomPi.jar"
+	            basedir="bin/" 
+	     		includes="" 
+	     		excludes=""
+	     		compress="no">
+	     		<manifest>
+	     		    	<attribute name="Main-Class" value="intercomPi.Main"/>
+	     		    <attribute name="Class-Path" value=". gson-2.2.4.jar jsch-0.1.51.jar" />
+	      		
+	     		</manifest>
+			</jar>
+			
+	        <copy todir="jar">
+	            <fileset dir="ExterneJar"/>
+        </copy>
+        
+	    </target> 
+	    <target name="export">
+	        <scp trust="true" todir="pi@88.166.207.71:/home/pi/jar" password="Marseille13!" port="2222">
+	        	<fileset dir="jar"/>
+	        </scp>
+	    </target>
+</project>
