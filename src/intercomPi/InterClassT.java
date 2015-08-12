@@ -28,7 +28,7 @@ public class InterClassT {
 			p = Runtime.getRuntime().exec(cmdOn);
 			p.waitFor();
 			date = new GregorianCalendar().getTime();
-			position=true;
+			position = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,13 +37,13 @@ public class InterClassT {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void offForce() {
 		try {
-			//System.out.println(this.getClass().toString() + " " + cmdOff);
+			// System.out.println(this.getClass().toString() + " " + cmdOff);
 			p = Runtime.getRuntime().exec(cmdOff);
 			p.waitFor();
-			position=false;
+			position = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,10 +52,11 @@ public class InterClassT {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void off() {
-		if(position!=false){
-			//System.out.println("Autres passages : " + c.getTime().toString());
+		if (position != false) {
+			// System.out.println("Autres passages : " +
+			// c.getTime().toString());
 			Calendar c1 = new GregorianCalendar();
 			c1.setTime(date);
 			c1.add(Calendar.MINUTE, min);
@@ -65,8 +66,8 @@ public class InterClassT {
 
 			if (c2.getTime().after(c1.getTime())) {
 				this.offForce();
-			}else{
-				System.out.println(c2.getTime() +" after " + c1.getTime());
+			} else {
+				System.out.println(c2.getTime() + " after " + c1.getTime());
 			}
 		}
 	}

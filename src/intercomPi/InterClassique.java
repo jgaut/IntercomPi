@@ -8,14 +8,14 @@ public class InterClassique {
 	private String off;
 	Runtime runtime;
 	Process p;
-	
-	InterClassique(String on, String off){
+
+	InterClassique(String on, String off) {
 		this.on = on;
 		this.off = off;
 		runtime = Runtime.getRuntime();
 	}
-	
-	public void putOn(){
+
+	public void putOn() {
 		try {
 			p = runtime.exec(on);
 		} catch (IOException e) {
@@ -23,8 +23,8 @@ public class InterClassique {
 			e.printStackTrace();
 		}
 	}
-	
-	public void putOff(){
+
+	public void putOff() {
 		try {
 			p = runtime.exec(off);
 		} catch (IOException e) {

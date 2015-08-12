@@ -18,17 +18,19 @@ public class RecupApp {
 		BufferedReader rd;
 		String line;
 		try {
-			url = new URL("http://jintercom13.appspot.com/jintercom13?compte=c1&action=compte");
-			//url = new URL("http://www.google.fr");
+			url = new URL(
+					"http://jintercom13.appspot.com/jintercom13?compte=c1&action=compte");
+			// url = new URL("http://www.google.fr");
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			rd = new BufferedReader(
 					new InputStreamReader(conn.getInputStream()));
 			Gson gson = new Gson();
 			while ((line = rd.readLine()) != null) {
-				appList = gson.fromJson(line, new TypeToken<List<Appareil>>(){}.getType());
+				appList = gson.fromJson(line, new TypeToken<List<Appareil>>() {
+				}.getType());
 			}
-			
+
 			System.out.println("Fin de la recup des AppA");
 			rd.close();
 		} catch (IOException e) {
@@ -38,7 +40,7 @@ public class RecupApp {
 		}
 
 		return appList;
-		
+
 	}
 
 }

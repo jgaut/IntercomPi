@@ -20,10 +20,10 @@ public class DetecteurSonnette {
 	private Pattern pattern;
 	private Matcher m;
 	private int seuil;
-	private int saut=10;
-	private int [] q;
-	private InterClassT iCT; 
-	
+	private int saut = 10;
+	private int[] q;
+	private InterClassT iCT;
+
 	private static String RESET = "/bin/sh /home/pi/soundcard/Reset.sh";
 	private static String outSonnerie = "/bin/sh /home/pi/soundcard/Playback_to_Lineout.sh";
 
@@ -34,34 +34,34 @@ public class DetecteurSonnette {
 	public void setKeepRunning(boolean keepRunning) {
 		this.keepRunning = keepRunning;
 	}
-	
-	private int getMoyenne(int n){
-		int sum=0;
-		
-		for(int i=q.length-1;i>0;i--){
-			q[i]=q[i-1];
+
+	private int getMoyenne(int n) {
+		int sum = 0;
+
+		for (int i = q.length - 1; i > 0; i--) {
+			q[i] = q[i - 1];
 		}
-		
-		q[0]=n;
-		
-		for(int i=0;i<q.length;i++){
-			sum+=q[i];
+
+		q[0] = n;
+
+		for (int i = 0; i < q.length; i++) {
+			sum += q[i];
 		}
-		
-		return sum/q.length;
+
+		return sum / q.length;
 	}
 
 	DetecteurSonnette(String commande, int seuil, int moy, InterClassT iCT) {
 		this.commande = commande;
 		this.keepRunning = true;
 		this.pattern = Pattern.compile("[0-9]{2}", Pattern.UNICODE_CASE);
-		this.seuil=seuil;
-		q = new int [moy];
-		for(int i=0;i<q.length;i++){
-			q[i]=0;
+		this.seuil = seuil;
+		q = new int[moy];
+		for (int i = 0; i < q.length; i++) {
+			q[i] = 0;
 		}
-		
-		//Sortie du son sur l'enceinte
+
+		// Sortie du son sur l'enceinte
 		try {
 			Runtime runtime = Runtime.getRuntime();
 			Process p;
@@ -78,7 +78,7 @@ public class DetecteurSonnette {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		this.iCT = iCT;
 	}
 
@@ -93,37 +93,40 @@ public class DetecteurSonnette {
 				InputStream inputStream = p.getInputStream();
 				byte[] cbuf = new byte[100];
 				String strVal;
-				int value, lastValue =0;
-				int moyenne, lastMoyenne=0;
+				int value, lastValue = 0;
+				int moyenne, lastMoyenne = 0;
 				while (inputStream.read(cbuf) != -1 && keepRunning) {
 					strVal = new String(cbuf, "UTF-8");
-					//System.out.println(strVal);
+					// System.out.println(strVal);
 					/* Recherche des valeurs de detection pour une sonnerie */
 					m = pattern.matcher(strVal);
 
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-					Date date = new Date(); 
+					DateFormat dateFormat = new SimpleDateFormat(
+							"yyyy/MM/dd HH:mm:ss");
+					Date date = new Date();
 					if (m.find()) {
-						value = Integer.parseInt(strVal.substring(m.start(),m.end()));
-						moyenne=this.getMoyenne(value);
-						if(value!=lastValue || moyenne!=lastMoyenne){
-							System.out.print(dateFormat.format(date)+" "+"value "+value);
-							System.out.println(" moyenne "+moyenne);
+						value = Integer.parseInt(strVal.substring(m.start(),
+								m.end()));
+						moyenne = this.getMoyenne(value);
+						if (value != lastValue || moyenne != lastMoyenne) {
+							System.out.print(dateFormat.format(date) + " "
+									+ "value " + value);
+							System.out.println(" moyenne " + moyenne);
 						}
-						lastValue=value;
-						lastMoyenne=moyenne;
-						
-						if (moyenne >= seuil && saut<=0){
+						lastValue = value;
+						lastMoyenne = moyenne;
+
+						if (moyenne >= seuil && saut <= 0) {
 							System.out.println("Sonnerie detectee");
 							System.out.println(value);
 							this.setKeepRunning(false);
 							iCT.on();
-						}else{
+						} else {
 							iCT.off();
 						}
-						saut--; 
-						if(saut<=0){
-							saut=0;
+						saut--;
+						if (saut <= 0) {
+							saut = 0;
 						}
 					}
 				}

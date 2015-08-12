@@ -2,15 +2,15 @@ package intercomPi;
 
 public class Appareil {
 
-    private String compte;
+	private String compte;
 
-    private String server;
+	private String server;
 
-    private int port; 
-    
-    private int portSsh;
+	private int port;
 
-    public int getPortSsh() {
+	private int portSsh;
+
+	public int getPortSsh() {
 		return portSsh;
 	}
 
@@ -18,7 +18,7 @@ public class Appareil {
 		this.portSsh = portSsh;
 	}
 
-	public Appareil(String compte, String server,int port, int portSsh) {
+	public Appareil(String compte, String server, int port, int portSsh) {
 		this.compte = compte;
 		this.server = server;
 		this.port = port;
@@ -40,7 +40,7 @@ public class Appareil {
 	public void setServer(String server) {
 		this.server = server;
 	}
-	
+
 	public int getPort() {
 		return port;
 	}
