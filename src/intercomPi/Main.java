@@ -3,7 +3,7 @@ package intercomPi;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 public class Main {
 
 	// private static RecupApp recupApp;
@@ -38,6 +38,9 @@ public class Main {
 
 		boolean keep = true;
 		boolean APPEL = false;
+		boolean IFTTSMS = true;
+		boolean IFTTNOTIF = true;
+		boolean AUTOOPENDOOR = true;
 
 		if (args.length != 2) {
 			// MyLogger.log("usage : intercom seuil amplification moyenne timeout");
@@ -116,13 +119,16 @@ public class Main {
 			// DetecteurSonnette detector = new
 			// DetecteurSonnette(stringDetector, Integer.parseInt(args[0]),
 			// Integer.parseInt(args[2]), iCT);
+			
+			//Commande de deblocage unitaire pour test : gpio mode 1 out; gpio write 1 1; gpio mode 1 IN;
 			DetecteurSonnetteNew detectorNew = new DetecteurSonnetteNew();
 
 			// Lancement du detecteur de sonnerie
 			// detector.start();
 			detectorNew.start();
-			
+
 			// Si sortie alors sonnerie !!!
+
 
 			// Jouer la sonnerie
 			// sonnette.start();
@@ -140,21 +146,52 @@ public class Main {
 			 */
 
 			// IFTTT Notification
-			Process ifttt;
-			Runtime runIfttt = Runtime.getRuntime();
+			if(IFTTNOTIF){
+				Process ifttt;
+				Runtime runIfttt = Runtime.getRuntime();
 
-			MyLogger.log("Envoi d'une notification IFTTT");
-			try {
-				ifttt = runIfttt.exec("/usr/bin/curl -X GET https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/cRY4eknJmi0dHdN7egeyLE");
-				ifttt.waitFor();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyLogger.log("Envoi d'une notification IFTTT");
+				try {
+					ifttt = runIfttt.exec("/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/cRY4eknJmi0dHdN7egeyLE");
+					ifttt.waitFor();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
+			// IFTTT SMS
+			if(IFTTSMS){
+				Process ifttt;
+				Runtime runIfttt = Runtime.getRuntime();
+
+				MyLogger.log("Envoi d'un SMS IFTTT");
+				try {
+					ifttt = runIfttt.exec("/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomSms/with/key/cRY4eknJmi0dHdN7egeyLE");
+					ifttt.waitFor();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			//Auto Open Door
+			if(AUTOOPENDOOR){
+				if(OpenDoorAuto.allowToOpenDoor(compte)){
+					Door.open();
+				}
+			}
+			
+			
+			
+			
+			//Appel sur appareil mobile
 			if (APPEL == true) {
 				// Recuperation des appareils connectes
 				MyLogger.log("Recuperation des appareils connectes");
