@@ -34,31 +34,21 @@ public class Main {
 	// private static InterClassT iCT;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		boolean keep = true;
+		MyLogger.log("Initialisation...");
+
+		boolean LOOP = true;
 		boolean APPEL = false;
 		boolean IFTTSMS = true;
 		boolean IFTTNOTIF = true;
 		boolean AUTOOPENDOOR = true;
 
-		if (args.length != 2) {
-			// MyLogger.log("usage : intercom seuil amplification moyenne timeout");
-			MyLogger.log("usage : intercom amplification timeout");
-			keep = false;
-		}
-
-		// Par defaut, l'interphone classique est mis hors service
-		// MyLogger.log("Passage en off de l'interphone classique");
-		// iCT = new InterClassT(onPhone, offPhone, 1, 15);
-
-		while (keep) { 
-			keep=false;
-			MyLogger.log("Start Main!");
+		while (LOOP) { 
+			MyLogger.log("Loop...");
 			// MyLogger.log("Seuil : " +args[0]);
-			MyLogger.log("Amplification : " + args[0]);
+			//MyLogger.log("Amplification : " + args[0]);
 			// MyLogger.log("Moyenne : " +args[2]);
-			MyLogger.log("timeout :" + args[1]);
+			//MyLogger.log("timeout :" + args[1]);
 
 			/* Nettoyage des anciens process */
 			/*
@@ -115,35 +105,16 @@ public class Main {
 			 * 
 			 * MyLogger.log("Mon IP : "+IP);
 			 */
-			// Construction du detecteur de sonnerie
-			// DetecteurSonnette detector = new
-			// DetecteurSonnette(stringDetector, Integer.parseInt(args[0]),
-			// Integer.parseInt(args[2]), iCT);
 			
 			//Commande de deblocage unitaire pour test : gpio mode 1 out; gpio write 1 1; gpio mode 1 IN;
 			DetecteurSonnetteNew detectorNew = new DetecteurSonnetteNew();
-
 			// Lancement du detecteur de sonnerie
-			// detector.start();
 			detectorNew.start();
-
 			// Si sortie alors sonnerie !!!
 
 
 			// Jouer la sonnerie
 			// sonnette.start();
-
-			// Envoi email
-			/*
-			 * Process email; Runtime runEmail= Runtime.getRuntime();; try {
-			 * MyLogger.log("Envoi d'email"); email =
-			 * runEmail.exec("/home/pi/jar/email.sh"); InputStream ips =
-			 * email.getErrorStream(); byte[] buff = new byte[100];
-			 * if(ips.read(buff) != -1){ String valeur = new String(buff,
-			 * "UTF-8"); MyLogger.log(valeur); }
-			 * 
-			 * ips.close(); } catch (IOException e1) { e1.printStackTrace(); }
-			 */
 
 			// IFTTT Notification
 			if(IFTTNOTIF){
@@ -226,7 +197,7 @@ public class Main {
 				}
 			}
 
-			// keep=false;
+			// LOOP=false;
 		}
 	}
 
