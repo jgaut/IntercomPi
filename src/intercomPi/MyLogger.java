@@ -12,12 +12,8 @@ public class MyLogger {
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd|HH:mm:ss|");
 	//private static Date date = new Date();
 	
-<<<<<<< Updated upstream
+
 	public static void log(String s){
-		System.out.println(dateFormat.format(new Date()) + getCallingMethod() + "|" + s);
-=======
-	public static void log(String s){ 
-		//System.out.println(dateFormat.format(date) + s);
 		
 		File f = new File ("/var/lib/intercom/intercom.log");
 		 
@@ -25,14 +21,14 @@ public class MyLogger {
 		{
 		    FileWriter fw = new FileWriter (f, true);
 		 
-		    fw.write(dateFormat.format(date) + s + "\n");
+		    fw.write(dateFormat.format(new Date()) + getCallingMethod() + "|" + s + "\n");
 		    fw.close();
 		}
 		catch (IOException exception)
 		{
 		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		}
->>>>>>> Stashed changes
+
 	}
 	
 	private static String getCallingMethod() {
@@ -43,7 +39,7 @@ public class MyLogger {
         	if (e != null && e.length >= level) {
             		StackTraceElement s = e[level];
             		if (s != null) {
-                		return s.getClassName() + "." + s.getMethodName()+"("+getLineNumber()+")";
+                		return s.getClassName() + "." + s.getMethodName()+"("+s.getLineNumber()+")";
             		}
         	}
         return null;

@@ -6,7 +6,7 @@ import java.util.List;
  
 public class Main {
 
-	// private static RecupApp recupApp;
+	private static RecupApp recupApp;
 	private static ArrayList<Communicator> arrayApp;
 	// private static String cmdKill =
 	// "ps h | grep '$proc' | awk '{ print $1 }'  | xargs kill ";
@@ -35,36 +35,21 @@ public class Main {
 
 	public static void main(String[] args) {
 
-<<<<<<< Updated upstream
 		MyLogger.log("Initialisation...");
 
 		boolean LOOP = true;
-		boolean APPEL = false;
-=======
-		boolean keep = true; 
 		boolean APPEL = false; 
->>>>>>> Stashed changes
 		boolean IFTTSMS = true;
 		boolean IFTTNOTIF = true; 
 		boolean AUTOOPENDOOR = true;
-<<<<<<< Updated upstream
 
 		while (LOOP) { 
 			MyLogger.log("Loop...");
-=======
-		if (args.length != 2) {
-			// MyLogger.log("usage : intercom seuil amplification moyenne timeout"); 
-			MyLogger.log("usage : intercom amplification timeout");
-			keep = false;
-		}
 
 		// Par defaut, l'interphone classique est mis hors service
 		// MyLogger.log("Passage en off de l'interphone classique");
 		// iCT = new InterClassT(onPhone, offPhone, 1, 15);
 
-		while (keep) { 
-			MyLogger.log("Start Main!");
->>>>>>> Stashed changes
 			// MyLogger.log("Seuil : " +args[0]);
 			//MyLogger.log("Amplification : " + args[0]);
 			// MyLogger.log("Moyenne : " +args[2]);
