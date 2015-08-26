@@ -21,7 +21,7 @@ public class MyLogger {
         	if (e != null && e.length >= level) {
             		StackTraceElement s = e[level];
             		if (s != null) {
-                		return s.getClassName() + "." + s.getMethodName();
+                		return s.getClassName() + "." + s.getMethodName()+"("+getLineNumber()+")";
             		}
         	}
         return null;
