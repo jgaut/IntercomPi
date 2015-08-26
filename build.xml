@@ -77,7 +77,8 @@
         
 	    </target> 
 	    <target name="export">
-	        <scp trust="true" todir="pi@88.166.207.71:/home/pi/jar" password="Marseille13!" port="2222">
+	        <!--<scp trust="true" todir="pi@88.166.207.71:/home/pi/jar" password="Marseille13!" port="2221">-->
+	        <scp trust="true" todir="pi@192.168.1.56:/home/pi/jar" password="Marseille13!" port="22">    
 	        	<fileset dir="jar"/>
 	        </scp>
 	    </target>

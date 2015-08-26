@@ -35,16 +35,36 @@ public class Main {
 
 	public static void main(String[] args) {
 
+<<<<<<< Updated upstream
 		MyLogger.log("Initialisation...");
 
 		boolean LOOP = true;
 		boolean APPEL = false;
+=======
+		boolean keep = true; 
+		boolean APPEL = false; 
+>>>>>>> Stashed changes
 		boolean IFTTSMS = true;
-		boolean IFTTNOTIF = true;
+		boolean IFTTNOTIF = true; 
 		boolean AUTOOPENDOOR = true;
+<<<<<<< Updated upstream
 
 		while (LOOP) { 
 			MyLogger.log("Loop...");
+=======
+		if (args.length != 2) {
+			// MyLogger.log("usage : intercom seuil amplification moyenne timeout"); 
+			MyLogger.log("usage : intercom amplification timeout");
+			keep = false;
+		}
+
+		// Par defaut, l'interphone classique est mis hors service
+		// MyLogger.log("Passage en off de l'interphone classique");
+		// iCT = new InterClassT(onPhone, offPhone, 1, 15);
+
+		while (keep) { 
+			MyLogger.log("Start Main!");
+>>>>>>> Stashed changes
 			// MyLogger.log("Seuil : " +args[0]);
 			//MyLogger.log("Amplification : " + args[0]);
 			// MyLogger.log("Moyenne : " +args[2]);
@@ -141,7 +161,10 @@ public class Main {
 
 				MyLogger.log("Envoi d'un SMS IFTTT");
 				try {
-					ifttt = runIfttt.exec("/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomSms/with/key/cRY4eknJmi0dHdN7egeyLE");
+					String url = "/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomSms/with/key/cRY4eknJmi0dHdN7egeyLE";
+					
+					//Mylogger.log(url); 
+					ifttt = runIfttt.exec(url);
 					ifttt.waitFor();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -154,6 +177,7 @@ public class Main {
 			
 			//Auto Open Door
 			if(AUTOOPENDOOR){
+				MyLogger.log("Auto Open Door ?");
 				if(OpenDoorAuto.allowToOpenDoor(compte)){
 					Door.open();
 				}
@@ -199,6 +223,8 @@ public class Main {
 
 			// LOOP=false;
 		}
+		MyLogger.log("Fin du porgramme");
+	
 	}
 
 	public static String getCompte() {

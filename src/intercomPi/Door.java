@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class Door {
 	
-	private static String openDoor = "/usr/local/bin/gpio mode 16 OUT ; /usr/local/bin/gpio write 16 0 ; sleep 2s ; /usr/local/bin/gpio write 16 1 ; /usr/local/bin/gpio mode 16 ALT0 ;";
+	private static String openDoor = "/usr/local/bin/gpio mode 7 IN ; /usr/local/bin/gpio mode 7 OUT ; /usr/local/bin/gpio write 7 0 ; /usr/local/bin/gpio write 7 1 ; sleep 1s ; /usr/local/bin/gpio mode 7 IN ;";
 	
 	public static void open(){
 		String tabS[] = openDoor.split(";");
