@@ -4,12 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Door {
-	
-	private static String openDoor = "/usr/local/bin/gpio mode 0 IN ; /usr/local/bin/gpio mode 7 OUT ; /usr/local/bin/gpio write 7 1 ; sleep 2s ; /usr/local/bin/gpio mode 7 IN ;";
-	
-	public static void open(){
-		String tabS[] = openDoor.split(";");
+public class Ring {
+
+	private static String setOndoor = "/usr/local/bin/gpio mode 2 IN";
+	private static String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
+
+
+	public static void setRing(boolean bool){
+
+		String cmd;
+		if(bool){
+			cmd = setOndoor;
+		}else{
+			cmd = setOffdoor;
+		}
+
+		String tabS[] = cmd.split(";");
 		for (int i = 0; i < tabS.length; i++) {
 			MyLogger.log(tabS[i]);
 			Process opDoor;
@@ -35,8 +45,9 @@ public class Door {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
+
 	}
 	
 	private static BufferedReader getOutput(Process p) {
@@ -46,4 +57,5 @@ public class Door {
 	private static BufferedReader getError(Process p) {
 		return new BufferedReader(new InputStreamReader(p.getErrorStream()));
 	}
+
 }
