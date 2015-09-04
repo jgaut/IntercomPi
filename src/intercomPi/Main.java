@@ -116,11 +116,18 @@ public class Main {
 			// Lancement du detecteur de sonnerie
 			detectorNew.start();
 			// Si sortie alors sonnerie !!!
-
-
+			
 			// Jouer la sonnerie
 			// sonnette.start();
-
+			
+			//Auto Open Door
+			if(AUTOOPENDOOR){
+				MyLogger.log("Auto Open Door ?");
+				if(OpenDoorAuto.allowToOpenDoor(compte)){
+					Door.open();
+				}
+			}
+			
 			// IFTTT Notification
 			if(IFTTNOTIF){
 				Process ifttt;
@@ -160,13 +167,7 @@ public class Main {
 				}
 			}
 			
-			//Auto Open Door
-			if(AUTOOPENDOOR){
-				MyLogger.log("Auto Open Door ?");
-				if(OpenDoorAuto.allowToOpenDoor(compte)){
-					Door.open();
-				}
-			}
+
 			
 			
 			
