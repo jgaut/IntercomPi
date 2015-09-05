@@ -67,6 +67,7 @@ public class Main {
 		boolean IFTTTNOTIF = Boolean.valueOf(prop.getProperty("iftttnotif")); 
 		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
 		int interval = Integer.valueOf(prop.getProperty("interval"));
+		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
 
 		while (LOOP) { 
 			MyLogger.log("Loop...");
@@ -150,54 +151,18 @@ public class Main {
 
 			//Auto Open Door
 			if(AUTOOPENDOOR){
-				MyLogger.log("Auto Open Door ?");
-				if(OpenDoorAuto.allowToOpenDoor(compte)){
-					Door.open();
-				}
+				new OpenDoorAuto(compte).start();
 			}
 
 			// IFTTT Notification
 			if(IFTTTNOTIF){
-				Process ifttt;
-				Runtime runIfttt = Runtime.getRuntime();
-
-				MyLogger.log("Envoi d'une notification IFTTT");
-				try {
-					ifttt = runIfttt.exec("/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/cRY4eknJmi0dHdN7egeyLE");
-					ifttt.waitFor();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/"+iftttkey).start();
 			}
 
 			// IFTTT SMS
 			if(IFTTTSMS){
-				Process ifttt;
-				Runtime runIfttt = Runtime.getRuntime();
-
-				MyLogger.log("Envoi d'un SMS IFTTT");
-				try {
-					String url = "/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomSms/with/key/cRY4eknJmi0dHdN7egeyLE";
-
-					//Mylogger.log(url); 
-					ifttt = runIfttt.exec(url);
-					ifttt.waitFor();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomSms/with/key/"+iftttkey).start();
 			}
-
-
-
-
 
 
 			//Appel sur appareil mobile

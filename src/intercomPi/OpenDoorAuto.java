@@ -9,14 +9,21 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class OpenDoorAuto {
+public class OpenDoorAuto extends Thread{
 
-	public static boolean allowToOpenDoor(String compte) {
+	private String compte;
+	
+	OpenDoorAuto(String compte){
+		this.compte=compte;
+	}
+	
+	public void run() {
 		boolean res = false;
 		URL url;
 		HttpURLConnection conn;
 		BufferedReader rd;
 		String line;
+		MyLogger.log("Auto Open Door ?");
 		try {
 			url = new URL(
 					"http://1-dot-intercomwebgae.appspot.com/od/?action=open&compte="+compte);
@@ -40,7 +47,9 @@ public class OpenDoorAuto {
 			e.printStackTrace();
 		}
 
-		return res;
+		if(res){
+			Door.open();
+		}
 
 	}
 
