@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
- 
+
 public class Main {
 
 	private static RecupApp recupApp;
@@ -42,7 +42,7 @@ public class Main {
 
 		String curDir = System.getProperty("user.dir");
 		MyLogger.log("Le repertoire courant est: "+curDir);
-		    
+
 		Properties prop = new Properties();
 		/* Ici le fichier contenant les donnees de configuration est nomme'db.myproperties' */
 		FileInputStream in;
@@ -58,7 +58,7 @@ public class Main {
 			e.printStackTrace(); 
 		}
 
-		
+
 		// Extraction des proprietes
 		String compte = String.valueOf(prop.getProperty("compte"));
 		boolean LOOP = Boolean.valueOf(prop.getProperty("loop"));
@@ -73,10 +73,10 @@ public class Main {
 
 			MyLogger.log("Ring Thread");
 			new RingThread(compte, interval).start();
-			
-		// Par defaut, l'interphone classique est mis hors service
-		// MyLogger.log("Passage en off de l'interphone classique");
-		// iCT = new InterClassT(onPhone, offPhone, 1, 15);
+
+			// Par defaut, l'interphone classique est mis hors service
+			// MyLogger.log("Passage en off de l'interphone classique");
+			// iCT = new InterClassT(onPhone, offPhone, 1, 15);
 
 			// MyLogger.log("Seuil : " +args[0]);
 			//MyLogger.log("Amplification : " + args[0]);
@@ -138,16 +138,16 @@ public class Main {
 			 * 
 			 * MyLogger.log("Mon IP : "+IP);
 			 */
-			
+
 			//Commande de deblocage unitaire pour test : gpio mode 1 out; gpio write 1 1; gpio mode 1 IN;
 			DetecteurSonnetteNew detectorNew = new DetecteurSonnetteNew();
 			// Lancement du detecteur de sonnerie
 			detectorNew.start();
 			// Si sortie alors sonnerie !!!
-			
+
 			// Jouer la sonnerie
 			// sonnette.start();
-			
+
 			//Auto Open Door
 			if(AUTOOPENDOOR){
 				MyLogger.log("Auto Open Door ?");
@@ -155,7 +155,7 @@ public class Main {
 					Door.open();
 				}
 			}
-			
+
 			// IFTTT Notification
 			if(IFTTTNOTIF){
 				Process ifttt;
@@ -182,7 +182,7 @@ public class Main {
 				MyLogger.log("Envoi d'un SMS IFTTT");
 				try {
 					String url = "/usr/bin/curl -X POST https://maker.ifttt.com/trigger/ringIntercomSms/with/key/cRY4eknJmi0dHdN7egeyLE";
-					
+
 					//Mylogger.log(url); 
 					ifttt = runIfttt.exec(url);
 					ifttt.waitFor();
@@ -194,12 +194,12 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-			
 
-			
-			
-			
-			
+
+
+
+
+
 			//Appel sur appareil mobile
 			if (APPEL == true) {
 				// Recuperation des appareils connectes
@@ -238,7 +238,7 @@ public class Main {
 			// LOOP=false;
 		}
 		MyLogger.log("Fin du porgramme");
-	
+
 	}
 
 	public static String getCompte() {
