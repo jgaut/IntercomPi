@@ -1,8 +1,11 @@
 package intercomPi;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
  
 public class Main {
 
@@ -37,15 +40,40 @@ public class Main {
 
 		MyLogger.log("Initialisation...");
 
-		boolean LOOP = true;
-		boolean APPEL = false; 
-		boolean IFTTSMS = true;
-		boolean IFTTNOTIF = true; 
-		boolean AUTOOPENDOOR = true;
+		String curDir = System.getProperty("user.dir");
+		MyLogger.log("Le repertoire courant est: "+curDir);
+		    
+		Properties prop = new Properties();
+		/* Ici le fichier contenant les donnees de configuration est nomme'db.myproperties' */
+		FileInputStream in;
+		try {
+			in = new FileInputStream("/home/pi/jar/conf.properties");
+			prop.load(in);
+			in.close();
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+		}
+
+		
+		// Extraction des proprietes
+		String compte = String.valueOf(prop.getProperty("compte"));
+		boolean LOOP = Boolean.valueOf(prop.getProperty("loop"));
+		boolean APPEL = Boolean.valueOf(prop.getProperty("appel")); 
+		boolean IFTTTSMS = Boolean.valueOf(prop.getProperty("iftttsms"));
+		boolean IFTTTNOTIF = Boolean.valueOf(prop.getProperty("iftttnotif")); 
+		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
+		int interval = Integer.valueOf(prop.getProperty("interval"));
 
 		while (LOOP) { 
 			MyLogger.log("Loop...");
 
+			MyLogger.log("Ring Thread");
+			new RingThread(compte, interval).start();
+			
 		// Par defaut, l'interphone classique est mis hors service
 		// MyLogger.log("Passage en off de l'interphone classique");
 		// iCT = new InterClassT(onPhone, offPhone, 1, 15);
@@ -129,7 +157,7 @@ public class Main {
 			}
 			
 			// IFTTT Notification
-			if(IFTTNOTIF){
+			if(IFTTTNOTIF){
 				Process ifttt;
 				Runtime runIfttt = Runtime.getRuntime();
 
@@ -147,7 +175,7 @@ public class Main {
 			}
 
 			// IFTTT SMS
-			if(IFTTSMS){
+			if(IFTTTSMS){
 				Process ifttt;
 				Runtime runIfttt = Runtime.getRuntime();
 

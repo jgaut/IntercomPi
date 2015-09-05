@@ -25,6 +25,7 @@ public class RingThread extends Thread{
 		HttpURLConnection conn;
 		BufferedReader rd;
 		String line;
+		MyLogger.log("Thread loop");
 		while(true){
 			try {
 				url = new URL(
@@ -50,6 +51,12 @@ public class RingThread extends Thread{
 			}
 			//Set on ou off de la sonnette
 			Ring.setRing(res);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 
