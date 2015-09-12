@@ -3,7 +3,10 @@ package intercomPi;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,6 +19,8 @@ public class Main {
 	private static List<Appareil> listAppA;
 	private static String compte = "c1";
 	public static String IP;
+	public static String logfile;
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
 	// private static String RESET = "/bin/sh /home/pi/soundcard/Reset.sh";
 	// private static String Record =
@@ -38,16 +43,11 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		MyLogger.log("Initialisation...");
-
-		String curDir = System.getProperty("user.dir");
-		MyLogger.log("Le repertoire courant est: "+curDir);
-
 		Properties prop = new Properties();
 		/* Ici le fichier contenant les donnees de configuration est nomme'db.myproperties' */
 		FileInputStream in;
 		try {
-			in = new FileInputStream("/home/pi/jar/conf.properties");
+			in = new FileInputStream("/home/pi/intercom/conf.properties");
 			prop.load(in);
 			in.close();
 		} catch (FileNotFoundException e2) {
@@ -68,12 +68,21 @@ public class Main {
 		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
 		int interval = Integer.valueOf(prop.getProperty("interval"));
 		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
+		logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
+		
+		MyLogger.log("Initialisation...");
 
+		String curDir = System.getProperty("user.dir");
+		MyLogger.log("Le repertoire courant est: "+curDir);
+		
+		
+		MyLogger.log("Ring Thread");
+		new RingThread(compte, interval).start();
+		
 		while (LOOP) { 
 			MyLogger.log("Loop...");
 
-			MyLogger.log("Ring Thread");
-			new RingThread(compte, interval).start();
+			
 
 			// Par defaut, l'interphone classique est mis hors service
 			// MyLogger.log("Passage en off de l'interphone classique");

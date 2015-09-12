@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class Ring {
 
-	private static String setOndoor = "/usr/local/bin/gpio mode 2 IN";
+	private static String setOndoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 O ;";
 	private static String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
 
 	private static boolean status=false;
@@ -16,7 +16,7 @@ public class Ring {
 		String cmd;
 
 		//MyLogger.log("status = "+status+" | bool = "+bool);
-		if(bool!=status){
+		//if(bool!=status){
 			
 			if(bool){
 				cmd = setOndoor;
@@ -26,7 +26,7 @@ public class Ring {
 
 			String tabS[] = cmd.split(";");
 			for (int i = 0; i < tabS.length; i++) {
-				MyLogger.log(tabS[i]);
+				//MyLogger.log(tabS[i]);
 				Process opDoor;
 				try {
 					opDoor = Runtime.getRuntime().exec(tabS[i]);
@@ -36,7 +36,7 @@ public class Ring {
 					opDoor.waitFor();
 
 					while ((ligne = output.readLine()) != null) {
-						MyLogger.log(ligne);
+						//MyLogger.log(ligne);
 					}
 
 					while ((ligne = error.readLine()) != null) {
@@ -53,8 +53,8 @@ public class Ring {
 
 			}
 		}
-		status=bool;
-	}
+		//status=bool;
+	//}
 
 	private static BufferedReader getOutput(Process p) {
 		return new BufferedReader(new InputStreamReader(p.getInputStream()));

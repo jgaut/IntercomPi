@@ -30,27 +30,30 @@ public class RingThread extends Thread{
 			try {
 				url = new URL(
 						"http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
-				MyLogger.log(url.toString());
+				//MyLogger.log(url.toString());
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				rd = new BufferedReader(
 						new InputStreamReader(conn.getInputStream()));
 				Gson gson = new Gson();
 				while ((line = rd.readLine()) != null) {
-					MyLogger.log(line);
+					//MyLogger.log(line);
 					res = gson.fromJson(line, new TypeToken<Boolean>() {
 					}.getType());
 				}
 
-				MyLogger.log("Resultat : "+res);
+				//MyLogger.log("Resultat : "+res);
 				rd.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//Set on ou off de la sonnette
-			Ring.setRing(res);
+			//Si auto open door prevu alors on met sur off la sonnette
+			//if(res){
+				//Ring.setRing(false);
+			//}
+			Ring.setRing(!res);
 			try {
 				Thread.sleep(interval);
 			} catch (InterruptedException e) {

@@ -9,13 +9,13 @@ import java.util.Date;
 
 public class MyLogger {
 
-	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd|HH:mm:ss|");
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd|HH:mm:ss|");
 	//private static Date date = new Date();
 	
 
 	public static void log(String s){
 		
-		File f = new File ("/var/lib/intercom/intercom.log");
+		File f = new File (Main.logfile);
 		 
 		try
 		{
