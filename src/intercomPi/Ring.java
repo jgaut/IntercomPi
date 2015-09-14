@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 
 public class Ring {
 
-	private static String setOndoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 O ;";
-	private static String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
+	private String setOndoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 O ;";
+	private String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
 
-	private static boolean status=false;
+	//private static boolean status=false;
 
-	public static void setRing(boolean bool){
+	public void setRing(boolean bool){
 
 		String cmd;
 

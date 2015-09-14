@@ -26,6 +26,7 @@ public class RingThread extends Thread{
 		BufferedReader rd;
 		String line;
 		MyLogger.log("Thread loop");
+		Ring ring = new Ring();
 		while(true){
 			try {
 				url = new URL(
@@ -53,7 +54,7 @@ public class RingThread extends Thread{
 			//if(res){
 				//Ring.setRing(false);
 			//}
-			Ring.setRing(!res);
+			ring.setRing(!res);
 			try {
 				Thread.sleep(interval);
 			} catch (InterruptedException e) {

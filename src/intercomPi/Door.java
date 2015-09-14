@@ -6,9 +6,11 @@ import java.io.InputStreamReader;
 
 public class Door {
 	
-	private static String openDoor = "/usr/local/bin/gpio mode 0 IN ; /usr/local/bin/gpio mode 7 OUT ; /usr/local/bin/gpio write 7 1 ; sleep 2s ; /usr/local/bin/gpio mode 7 IN ;";
+	private String openDoor = "/usr/local/bin/gpio mode 7 OUT ; /usr/local/bin/gpio write 7 1 ; sleep 2s ; /usr/local/bin/gpio write 7 0 ;";
 	
-	public static void open(){
+	
+	
+	public void open(){
 		String tabS[] = openDoor.split(";");
 		for (int i = 0; i < tabS.length; i++) {
 			MyLogger.log(tabS[i]);
@@ -39,11 +41,11 @@ public class Door {
 		}
 	}
 	
-	private static BufferedReader getOutput(Process p) {
+	private BufferedReader getOutput(Process p) {
 		return new BufferedReader(new InputStreamReader(p.getInputStream()));
 	}
 
-	private static BufferedReader getError(Process p) {
+	private BufferedReader getError(Process p) {
 		return new BufferedReader(new InputStreamReader(p.getErrorStream()));
 	}
 }
