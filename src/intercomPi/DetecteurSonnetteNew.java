@@ -17,12 +17,15 @@ public class DetecteurSonnetteNew {
 	 * inferieure au SEUIL alors Fin tant que Fin
 	 */
 
+	private long id;
+	
 	DetecteurSonnetteNew() {
+		this.id=Thread.currentThread().getId();
 	}
 
 	public void start() {
 
-		MyLogger.log("Start new detecteur sonnerie");
+		MyLogger.log(id, "Start new detecteur sonnerie");
 
 		int[] tab = new int[10];
 		byte[] buff = new byte[100];
@@ -37,14 +40,14 @@ public class DetecteurSonnetteNew {
 
 		try {
 			runtime = Runtime.getRuntime();
-			MyLogger.log("Initialisation des PIN : ");
+			MyLogger.log(id, "Initialisation des PIN : ");
 			for (int i = 0; i < gInit.length; i++) {
 				MyLogger.log(gInit[i]);
 				p = runtime.exec(gInit[i]);
 				ips = p.getErrorStream();
 				if (ips.read(buff) != -1) {
 					String valeur = new String(buff, "UTF-8");
-					MyLogger.log(valeur);
+					MyLogger.log(id, valeur);
 				}
 
 				ips.close();
@@ -52,8 +55,8 @@ public class DetecteurSonnetteNew {
 			}
 			
 
-			MyLogger.log("Commande de lecture du PIN : ");
-			MyLogger.log(gRead);
+			MyLogger.log(id, "Commande de lecture du PIN : ");
+			MyLogger.log(id, gRead);
 			 
 
 			// Chargement du buffeur
@@ -70,13 +73,13 @@ public class DetecteurSonnetteNew {
 				if (ips.read(buff) != -1) {
 					valeur = new Integer(new String(buff, "UTF-8").substring(0,
 							1));
-					// MyLogger.log(valeur);
+					// MyLogger.log(id, valeur);
 				}
 
 				ips.close();
 			}
 
-			MyLogger.log("Sonnerie detectee : " + valeur);
+			MyLogger.log(id, "Sonnerie detectee : " + valeur);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
