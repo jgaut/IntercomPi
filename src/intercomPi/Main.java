@@ -21,7 +21,8 @@ public class Main {
 	public static String IP;
 	public static String logfile;
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-
+	private long id = Thread.currentThread().getId();
+	
 	// private static String RESET = "/bin/sh /home/pi/soundcard/Reset.sh";
 	// private static String Record =
 	// "/bin/sh /home/pi/soundcard/Record_from_Headset.sh";
@@ -70,17 +71,17 @@ public class Main {
 		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
 		logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
 		
-		MyLogger.log("Initialisation...");
+		MyLogger.log(id, "Initialisation...");
 
 		String curDir = System.getProperty("user.dir");
-		MyLogger.log("Le repertoire courant est: "+curDir);
+		MyLogger.log(id, "Le repertoire courant est: "+curDir);
 		
 		
-		MyLogger.log("Ring Thread");
+		MyLogger.log(id, "Ring Thread");
 		new RingThread(compte, interval).start();
 		
 		while (LOOP) { 
-			MyLogger.log("Loop...");
+			MyLogger.log(id, "Loop...");
 
 			
 
@@ -177,17 +178,17 @@ public class Main {
 			//Appel sur appareil mobile
 			if (APPEL == true) {
 				// Recuperation des appareils connectes
-				MyLogger.log("Recuperation des appareils connectes");
+				MyLogger.log(id, "Recuperation des appareils connectes");
 				arrayApp = new ArrayList<Communicator>();
 				listAppA = RecupApp.getAppList();
 				if (listAppA == null || listAppA.size() == 0) {
-					MyLogger.log("Aucun appareil connecte !!");
+					MyLogger.log(id, "Aucun appareil connecte !!");
 				} else {
 					int size = listAppA.size();
-					MyLogger.log(size + " appareil(s) connecte(s)");
+					MyLogger.log(id, size + " appareil(s) connecte(s)");
 
 					for (int i = 0; i < size; i++) {
-						MyLogger.log(listAppA.get(i).getPortSsh() + ":"
+						MyLogger.log(id, listAppA.get(i).getPortSsh() + ":"
 								+ listAppA.get(i).getServer() + ":"
 								+ listAppA.get(i).getPort());
 						arrayApp.add(i, new Communicator(listAppA.get(i), 1000,
@@ -205,13 +206,13 @@ public class Main {
 						}
 					}
 
-					MyLogger.log("Fin des appels");
+					MyLogger.log(id, "Fin des appels");
 				}
 			}
 
 			// LOOP=false;
 		}
-		MyLogger.log("Fin du porgramme");
+		MyLogger.log(id, "Fin du porgramme");
 
 	}
 
