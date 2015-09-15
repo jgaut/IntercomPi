@@ -12,9 +12,11 @@ import com.google.gson.reflect.TypeToken;
 public class OpenDoorAuto extends Thread{
 
 	private String compte;
+	private long id;
 	
 	OpenDoorAuto(String compte){
 		this.compte=compte;
+		this.id=Thread.currentThread().getId();
 	}
 	
 	public void run() {
@@ -23,23 +25,23 @@ public class OpenDoorAuto extends Thread{
 		HttpURLConnection conn;
 		BufferedReader rd;
 		String line;
-		MyLogger.log("Auto Open Door ?");
+		MyLogger.log(id, "Auto Open Door ?");
 		try {
 			url = new URL(
 					"http://1-dot-intercomwebgae.appspot.com/od/?action=open&compte="+compte);
-			MyLogger.log(url.toString());
+			MyLogger.log(id, url.toString());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			rd = new BufferedReader(
 					new InputStreamReader(conn.getInputStream()));
 			Gson gson = new Gson();
 			while ((line = rd.readLine()) != null) {
-				MyLogger.log(line);
+				MyLogger.log(id, line);
 				res = gson.fromJson(line, new TypeToken<Boolean>() {
 				}.getType());
 			}
 
-			MyLogger.log("Resultat : "+res);
+			MyLogger.log(id, "Resultat : "+res);
 			rd.close();
 		} catch (IOException e) {
 			e.printStackTrace();
