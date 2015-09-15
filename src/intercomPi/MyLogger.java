@@ -13,7 +13,7 @@ public class MyLogger {
 	//private static Date date = new Date();
 	
 
-	public static void log(String s){
+	public static void log(long id, String s){
 		
 		File f = new File (Main.logfile);
 		 
@@ -21,7 +21,7 @@ public class MyLogger {
 		{
 		    FileWriter fw = new FileWriter (f, true);
 		 
-		    fw.write(dateFormat.format(new Date()) + getCallingMethod() + "|" + s + "\n");
+		    fw.write(dateFormat.format(new Date()) + id + "|" + getCallingMethod() + "|" + s + "\n");
 		    fw.close();
 		}
 		catch (IOException exception)
