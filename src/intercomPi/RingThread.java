@@ -13,10 +13,12 @@ public class RingThread extends Thread{
 
 	private int interval;
 	private String compte;
+	private long id;
 
 	RingThread(String compte, int interval){
 		this.interval = interval;
 		this.compte = compte;
+		this.id = Thread.currentThread().getId();
 	}
 
 	public void run() {
@@ -25,25 +27,25 @@ public class RingThread extends Thread{
 		HttpURLConnection conn;
 		BufferedReader rd;
 		String line;
-		MyLogger.log("Thread loop");
+		MyLogger.log(id, "Thread loop");
 		Ring ring = new Ring();
 		while(true){
 			try {
 				url = new URL(
 						"http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
-				//MyLogger.log(url.toString());
+				//MyLogger.log(id, url.toString());
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				rd = new BufferedReader(
 						new InputStreamReader(conn.getInputStream()));
 				Gson gson = new Gson();
 				while ((line = rd.readLine()) != null) {
-					//MyLogger.log(line);
+					//MyLogger.log(id, line);
 					res = gson.fromJson(line, new TypeToken<Boolean>() {
 					}.getType());
 				}
 
-				//MyLogger.log("Resultat : "+res);
+				//MyLogger.log(id, "Resultat : "+res);
 				rd.close();
 			} catch (IOException e) {
 				e.printStackTrace();
