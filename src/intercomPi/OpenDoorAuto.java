@@ -44,9 +44,11 @@ public class OpenDoorAuto extends Thread{
 			MyLogger.log(id, "Resultat : "+res);
 			rd.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Thread.currentThread().interrupt();
+			MyLogger.log(id,e.printStackTrace());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Thread.currentThread().interrupt();
+			MyLogger.log(id,e.printStackTrace());
 		}
 
 		if(res){
