@@ -16,10 +16,11 @@ public class OpenDoorAuto extends Thread{
 	
 	OpenDoorAuto(String compte){
 		this.compte=compte;
-		this.id=Thread.currentThread().getId();
+		
 	}
 	
 	public void run() {
+		this.id=Thread.currentThread().getId();
 		boolean res = false;
 		URL url;
 		HttpURLConnection conn;
@@ -45,10 +46,10 @@ public class OpenDoorAuto extends Thread{
 			rd.close();
 		} catch (IOException e) {
 			Thread.currentThread().interrupt();
-			MyLogger.log(id,e.printStackTrace());
+			MyLogger.log(id,e.getMessage());
 		} catch (Exception e) {
 			Thread.currentThread().interrupt();
-			MyLogger.log(id,e.printStackTrace());
+			MyLogger.log(id,e.getMessage());
 		}
 
 		if(res){

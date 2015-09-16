@@ -18,10 +18,11 @@ public class RingThread extends Thread{
 	RingThread(String compte, int interval){
 		this.interval = interval;
 		this.compte = compte;
-		this.id = Thread.currentThread().getId();
+		
 	}
 
 	public void run() {
+		this.id = Thread.currentThread().getId();
 		boolean res = false;
 		URL url;
 		HttpURLConnection conn;

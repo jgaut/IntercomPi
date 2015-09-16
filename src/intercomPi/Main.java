@@ -3,6 +3,7 @@ package intercomPi;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Main {
 	public static String IP;
 	public static String logfile;
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-	private long id = Thread.currentThread().getId();
+	private static long id = Thread.currentThread().getId();
 	
 	// private static String RESET = "/bin/sh /home/pi/soundcard/Reset.sh";
 	// private static String Record =
@@ -69,7 +70,16 @@ public class Main {
 		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
 		int interval = Integer.valueOf(prop.getProperty("interval"));
 		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
-		logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
+		//logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
+		logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
+		
+		try {
+			System.setOut(new PrintStream(logfile));
+			System.setErr(new PrintStream(logfile));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		MyLogger.log(id, "Initialisation...");
 

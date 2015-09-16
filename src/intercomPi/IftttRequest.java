@@ -5,16 +5,19 @@ import java.io.IOException;
 public class IftttRequest extends Thread{
 
 	private String url;
+	private long id;
 	
 	IftttRequest(String url){
 		this.url = url;
+		
 	}
 	
 	public void run (){
+		this.id=Thread.currentThread().getId();
 		Process ifttt;
 		Runtime runIfttt = Runtime.getRuntime();
 
-		MyLogger.log("Envoi d'une requete IFTTT");
+		MyLogger.log(id, "Envoi d'une requete IFTTT");
 		try {
 			ifttt = runIfttt.exec("/usr/bin/curl -X POST "+url);
 			ifttt.waitFor();

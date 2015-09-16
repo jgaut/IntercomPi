@@ -42,7 +42,7 @@ public class DetecteurSonnetteNew {
 			runtime = Runtime.getRuntime();
 			MyLogger.log(id, "Initialisation des PIN : ");
 			for (int i = 0; i < gInit.length; i++) {
-				MyLogger.log(gInit[i]);
+				MyLogger.log(id, gInit[i]);
 				p = runtime.exec(gInit[i]);
 				ips = p.getErrorStream();
 				if (ips.read(buff) != -1) {

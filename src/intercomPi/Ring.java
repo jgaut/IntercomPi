@@ -8,9 +8,13 @@ public class Ring {
 
 	private String setOndoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 O ;";
 	private String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
+	private long id;
 
 	//private static boolean status=false;
 
+	Ring(){
+		this.id=Thread.currentThread().getId();
+	}
 	public void setRing(boolean bool){
 
 		String cmd;
@@ -40,7 +44,7 @@ public class Ring {
 					}
 
 					while ((ligne = error.readLine()) != null) {
-						MyLogger.log(ligne);
+						MyLogger.log(id, ligne);
 					}
 					opDoor.waitFor();
 				} catch (IOException e) {

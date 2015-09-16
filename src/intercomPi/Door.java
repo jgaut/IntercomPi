@@ -7,13 +7,16 @@ import java.io.InputStreamReader;
 public class Door {
 	
 	private String openDoor = "/usr/local/bin/gpio mode 7 OUT ; /usr/local/bin/gpio write 7 1 ; sleep 2s ; /usr/local/bin/gpio write 7 0 ;";
+	private long id;
 	
-	
+	Door(){
+		this.id=Thread.currentThread().getId();
+	}
 	
 	public void open(){
 		String tabS[] = openDoor.split(";");
 		for (int i = 0; i < tabS.length; i++) {
-			MyLogger.log(tabS[i]);
+			MyLogger.log(id, tabS[i]);
 			Process opDoor;
 			try {
 				opDoor = Runtime.getRuntime().exec(tabS[i]);
@@ -23,11 +26,11 @@ public class Door {
 				opDoor.waitFor();
 
 				while ((ligne = output.readLine()) != null) {
-					MyLogger.log(ligne);
+					MyLogger.log(id, ligne);
 				}
 
 				while ((ligne = error.readLine()) != null) {
-					MyLogger.log(ligne);
+					MyLogger.log(id, ligne);
 				}
 				opDoor.waitFor();
 			} catch (IOException e) {
