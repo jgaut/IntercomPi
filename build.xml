@@ -76,13 +76,14 @@
         </copy>
         
 	        	      <copy todir="jar" file="conf.properties"/>
-        
-	    </target> 
+         
+	    </target>  
 	    <target name="export">
-	        <scp trust="true" todir="${username}@${piIntercomLocal}:${piIntercomDirectory}" password="${password} port="${portLocal}">    
+	        <scp trust="true" todir="${username}@${piIntercomLocal}:${piIntercomDirectory}" password="${password}" port="${portLocal}">    
 	        	<fileset dir="jar"/>
-	        </scp>
-	        
-	         <sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLine}"/>
+	        </scp> 
+	         
+	         <sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLineStop}"/>
+	         <sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLineStart}"/>
 	    </target>
 </project>

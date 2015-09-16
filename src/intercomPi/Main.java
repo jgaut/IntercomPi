@@ -72,7 +72,7 @@ public class Main {
 		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
 		//logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
 		logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
-		
+		 
 		try {
 			System.setOut(new PrintStream(logfile));
 			System.setErr(new PrintStream(logfile));
