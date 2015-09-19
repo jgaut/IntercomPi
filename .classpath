@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="/Users/jeremy/BitTorrent Sync/workspace/IntercomPi/bin"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="ExterneJar/gson-2.2.4.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/jsch-0.1.51.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

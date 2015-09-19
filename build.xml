@@ -17,8 +17,8 @@
         <pathelement location="bin"/>
         <pathelement location="${JRE_LIB}"/>
         <path refid="Users/jeremy/Bittorent Sync/workspace/IntercomPi/bin.libraryclasspath"/>
-        <pathelement location="../../workspace/IntercomPi/ExterneJar/jsch-0.1.51.jar"/>
-        <pathelement location="../../workspace/IntercomPi/ExterneJar/gson-2.2.4.jar"/>
+        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
+        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/gson-2.3.1.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -27,7 +27,7 @@
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
-    </target>
+    </target> 
     <target name="clean">
         <delete dir="bin"/>
     </target>
@@ -66,10 +66,10 @@
 	     		compress="no">
 	     		<manifest>
 	     		    	<attribute name="Main-Class" value="intercomPi.Main"/>
-	     		    <attribute name="Class-Path" value=". gson-2.2.4.jar jsch-0.1.51.jar" />
+	     		    <attribute name="Class-Path" value=". gson-2.3.1.jar jsch-0.1.53.jar" />
 	      		
 	     		</manifest>
-			</jar>
+			</jar> 
 			
 	        <copy todir="jar">
 	            <fileset dir="ExterneJar"/>
@@ -80,10 +80,11 @@
 	    </target>  
 	    <target name="export">
 	        <scp trust="true" todir="${username}@${piIntercomLocal}:${piIntercomDirectory}" password="${password}" port="${portLocal}">    
-	        	<fileset dir="jar"/>
+	        	<fileset dir="jar/"/>
 	        </scp> 
 	         
-	         <sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLineStop}"/>
+	         <!--<sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLineStop}"/>
 	         <sshexec host="${piIntercomLocal}" username="${username}" password="${password}" command="${commandLineStart}"/>
+	    	 -->
 	    </target>
 </project>

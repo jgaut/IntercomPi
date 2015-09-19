@@ -28,7 +28,7 @@ public class Main {
 	// private static String Record =
 	// "/bin/sh /home/pi/soundcard/Record_from_Headset.sh";
 	// private static String Record =
-	// "/bin/sh /home/pi/soundcard/Record_from_lineIn.sh";
+	// "/bin/sh /home/pi/soundcard/Record_from_lineIn.sh"; 
 	// private static String PlayBack =
 	// "/bin/sh /home/pi/soundcard/Playback_to_Headset.sh";
 	// private static String outSonnerie =
@@ -70,8 +70,8 @@ public class Main {
 		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
 		int interval = Integer.valueOf(prop.getProperty("interval"));
 		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
-		//logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
-		logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
+		logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
+		//logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
 		 
 		try {
 			System.setOut(new PrintStream(logfile));
