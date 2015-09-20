@@ -59,7 +59,7 @@
 	         
 	        <delete dir="jar"/>
 	         
-	        <jar destfile="jar/IntercomPi.jar"
+	        <jar destfile="jar/IntercomPi/IntercomPi.jar"
 	            basedir="bin/" 
 	     		includes="" 
 	     		excludes=""
@@ -69,13 +69,13 @@
 	     		    <attribute name="Class-Path" value=". gson-2.3.1.jar jsch-0.1.53.jar" />
 	      		
 	     		</manifest>
-			</jar> 
+			</jar>
 			
 	        <copy todir="jar">
 	            <fileset dir="ExterneJar"/>
         </copy>
         
-	        	      <copy todir="jar" file="conf.properties"/>
+	        	      <copy todir="jar/IntercomPi" file="conf.properties"/>
          
 	    </target>  
 	    <target name="export">

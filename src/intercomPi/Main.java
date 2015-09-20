@@ -49,7 +49,7 @@ public class Main {
 		/* Ici le fichier contenant les donnees de configuration est nomme'db.myproperties' */
 		FileInputStream in;
 		try {
-			in = new FileInputStream("/home/pi/intercom/conf.properties");
+			in = new FileInputStream("/home/pi/IntercomPi/conf.properties");
 			prop.load(in);
 			in.close();
 		} catch (FileNotFoundException e2) {
