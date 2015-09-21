@@ -48,6 +48,7 @@ public class RingThread extends Thread{
 
 				//MyLogger.log(id, "Resultat : "+res);
 				rd.close();
+				conn.disconnect();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
