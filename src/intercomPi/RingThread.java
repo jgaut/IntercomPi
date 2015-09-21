@@ -30,19 +30,19 @@ public class RingThread extends Thread{
 		String line;
 		MyLogger.log(id, "Thread loop");
 		Ring ring = new Ring();
+		url = new URL("http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
+		
 		while(true){
 			try {
-				url = new URL(
-						"http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
 				//MyLogger.log(id, url.toString());
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				rd = new BufferedReader(
 						new InputStreamReader(conn.getInputStream()));
-				Gson gson = new Gson();
-				while ((line = rd.readLine()) != null) {
+				
+				while (conn.getResponseCode() == HttpURLConnection.HTTP_OK && (line = rd.readLine()) != null) {
 					//MyLogger.log(id, line);
-					res = gson.fromJson(line, new TypeToken<Boolean>() {
+					res = new Gson().fromJson(line, new TypeToken<Boolean>() {
 					}.getType());
 				}
 
