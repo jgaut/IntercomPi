@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/bin/java -jar /home/pi/IntercomPi/IntercomPi.jar &
+/home/pi/java/jdk1.8.0_60/bin/java -Dcom.sun.management.jmxremote.port=3333 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar /home/pi/IntercomPi/IntercomPi.jar &
