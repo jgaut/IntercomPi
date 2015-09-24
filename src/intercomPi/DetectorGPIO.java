@@ -16,6 +16,7 @@ public class DetectorGPIO extends Thread{
     GpioController gpio;
     // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
     GpioPinDigitalInput myDoor;
+    static boolean verrou = false;
     
 	DetectorGPIO(){
 		gpio = GpioFactory.getInstance();
@@ -33,13 +34,32 @@ public class DetectorGPIO extends Thread{
             	MyLogger.log(Thread.currentThread().getId(), myDoor.getState().toString());
             	if(myDoor!=null && myDoor.getState().isHigh()){
             		MyLogger.log(Thread.currentThread().getId(), "Sonnette !!");
-            		Scenario scen = new Scenario();
-            		scen.launch();
+            		if(BlockVerrou()){
+            			Scenario scen = new Scenario();
+                		scen.launch();
+                		ReleaseVerrou();
+            		}
             	}
                 return null;
             }
         }));
     
+	}
+	
+	synchronized boolean BlockVerrou() {
+
+		if (DetectorGPIO.verrou) {
+			return false;
+		}
+
+		DetectorGPIO.verrou = true;
+		return DetectorGPIO.verrou;
+
+	}
+
+	synchronized void ReleaseVerrou() {
+		DetectorGPIO.verrou = false;
+
 	}
 	
 }
