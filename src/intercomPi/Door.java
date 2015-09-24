@@ -23,14 +23,14 @@ public class Door {
 	
 	public void open(){
 		
-		myDoor = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.HIGH);
+		myDoor.setState(PinState.HIGH);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		myDoor = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.LOW);
+		myDoor.setState(PinState.LOW);
 		
 	}
 }

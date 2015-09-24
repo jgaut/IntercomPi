@@ -1,71 +1,35 @@
 package intercomPi;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
 
 public class Ring {
 
-	private String setOndoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 O ;";
-	private String setOffdoor = "/usr/local/bin/gpio mode 2 OUT ; /usr/local/bin/gpio write 2 1 ;";
 	private long id;
+	
+	// create gpio controller
+    GpioController gpio;
+    // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
+    GpioPinDigitalOutput myGpio;
 
 	//private static boolean status=false;
 
 	Ring(){
 		this.id=Thread.currentThread().getId();
+		myGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW);
 	}
+	
 	public void setRing(boolean bool){
-
-		String cmd;
-
-		//MyLogger.log("status = "+status+" | bool = "+bool);
-		//if(bool!=status){
 			
 			if(bool){
-				cmd = setOndoor;
+				myGpio.setState(PinState.LOW);
 			}else{
-				cmd = setOffdoor;
+				myGpio.setState(PinState.HIGH);
 			}
 
-			String tabS[] = cmd.split(";");
-			for (int i = 0; i < tabS.length; i++) {
-				//MyLogger.log(tabS[i]);
-				Process opDoor;
-				try {
-					opDoor = Runtime.getRuntime().exec(tabS[i]);
-					BufferedReader output = getOutput(opDoor);
-					BufferedReader error = getError(opDoor);
-					String ligne = "";
-					opDoor.waitFor();
-
-					while ((ligne = output.readLine()) != null) {
-						//MyLogger.log(ligne);
-					}
-
-					while ((ligne = error.readLine()) != null) {
-						MyLogger.log(id, ligne);
-					}
-					opDoor.waitFor();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
 		}
-		//status=bool;
-	//}
 
-	private static BufferedReader getOutput(Process p) {
-		return new BufferedReader(new InputStreamReader(p.getInputStream()));
-	}
-
-	private static BufferedReader getError(Process p) {
-		return new BufferedReader(new InputStreamReader(p.getErrorStream()));
-	}
 
 }

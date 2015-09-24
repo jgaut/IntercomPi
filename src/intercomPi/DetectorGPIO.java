@@ -15,24 +15,24 @@ public class DetectorGPIO extends Thread{
 	// create gpio controller
     GpioController gpio;
     // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
-    GpioPinDigitalInput myRing;
+    GpioPinDigitalInput myGpio;
     static boolean verrou = false;
     
 	DetectorGPIO(){
 		gpio = GpioFactory.getInstance();
 		gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, PinState.HIGH);
-		myRing = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_DOWN);
+		myGpio = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_DOWN);
 	}
 	
 	public void run(){
 		
 		// create a gpio callback trigger on gpio pin#4; when #4 changes state, perform a callback
         // invocation on the user defined 'Callable' class instance
-		myRing.addTrigger(new GpioCallbackTrigger(new Callable<Void>() {
+		myGpio.addTrigger(new GpioCallbackTrigger(new Callable<Void>() {
             public Void call() throws Exception {
             	MyLogger.log(Thread.currentThread().getId(), "Changement de valeur pour le pin 1");
-            	MyLogger.log(Thread.currentThread().getId(), myRing.getState().toString());
-            	if(myRing!=null && myRing.getState().isHigh()){
+            	MyLogger.log(Thread.currentThread().getId(), myGpio.getState().toString());
+            	if(myGpio!=null && myGpio.getState().isHigh()){
             		MyLogger.log(Thread.currentThread().getId(), "Sonnette !!");
             		if(BlockVerrou()){
             			Scenario scen = new Scenario();
