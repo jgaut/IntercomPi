@@ -6,5 +6,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="ExterneJar/IntercomPi/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-service.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

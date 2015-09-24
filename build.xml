@@ -19,6 +19,7 @@
         <path refid="Users/jeremy/Bittorent Sync/workspace/IntercomPi/bin.libraryclasspath"/>
         <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
         <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/gson-2.3.1.jar"/>
+        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/pi4j-core.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -66,7 +67,7 @@
 	     		compress="no">
 	     		<manifest>
 	     		    	<attribute name="Main-Class" value="intercomPi.Main"/>
-	     		    <attribute name="Class-Path" value=". gson-2.3.1.jar jsch-0.1.53.jar" />
+	     		    <attribute name="Class-Path" value=". gson-2.3.1.jar jsch-0.1.53.jar pi4j-core.jar" />
 	      		
 	     		</manifest>
 			</jar>

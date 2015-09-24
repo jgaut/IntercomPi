@@ -30,10 +30,10 @@ public class RingThread extends Thread{
 		String line;
 		MyLogger.log(id, "Thread loop");
 		Ring ring = new Ring();
-		url = new URL("http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
 		
 		while(true){
 			try {
+				url = new URL("http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
 				//MyLogger.log(id, url.toString());
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");

@@ -1,2 +1,2 @@
 #!/bin/sh
-/home/pi/java/jdk1.8.0_60/bin/java -Dcom.sun.management.jmxremote.port=3333 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar /home/pi/IntercomPi/IntercomPi.jar &
+sudo /home/pi/java/jdk1.8.0_60/bin/java -Dcom.sun.management.jmxremote.port=3333 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=true -Dcom.sun.management.jmxremote.password.file=/home/pi/IntercomPi/password -Djava.rmi.server.hostname=192.168.1.56 -jar /home/pi/IntercomPi/IntercomPi.jar &

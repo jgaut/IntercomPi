@@ -18,12 +18,17 @@ public class Main {
 	// private static String cmdKill =
 	// "ps h | grep '$proc' | awk '{ print $1 }'  | xargs kill ";
 	private static List<Appareil> listAppA;
-	private static String compte = "c1";
+	public static String compte;
 	public static String IP;
 	public static String logfile;
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 	private static long id = Thread.currentThread().getId();
-	
+	public static boolean APPEL;
+	public static boolean IFTTTSMS;
+	public static boolean IFTTTNOTIF;
+	public static boolean AUTOOPENDOOR;
+	public static boolean LOOP;
+	public static String iftttkey;
 	// private static String RESET = "/bin/sh /home/pi/soundcard/Reset.sh";
 	// private static String Record =
 	// "/bin/sh /home/pi/soundcard/Record_from_Headset.sh";
@@ -62,16 +67,16 @@ public class Main {
 
 
 		// Extraction des proprietes
-		String compte = String.valueOf(prop.getProperty("compte"));
-		boolean LOOP = Boolean.valueOf(prop.getProperty("loop"));
-		boolean APPEL = Boolean.valueOf(prop.getProperty("appel")); 
-		boolean IFTTTSMS = Boolean.valueOf(prop.getProperty("iftttsms"));
-		boolean IFTTTNOTIF = Boolean.valueOf(prop.getProperty("iftttnotif")); 
-		boolean AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
+		compte = String.valueOf(prop.getProperty("compte"));
+		LOOP = Boolean.valueOf(prop.getProperty("loop"));
+		APPEL = Boolean.valueOf(prop.getProperty("appel")); 
+		IFTTTSMS = Boolean.valueOf(prop.getProperty("iftttsms"));
+		IFTTTNOTIF = Boolean.valueOf(prop.getProperty("iftttnotif")); 
+		AUTOOPENDOOR = Boolean.valueOf(prop.getProperty("autoopendoor"));
 		int interval = Integer.valueOf(prop.getProperty("interval"));
-		String iftttkey = String.valueOf(prop.getProperty("iftttkey"));
-		logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
-		//logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
+		iftttkey = String.valueOf(prop.getProperty("iftttkey"));
+		//logfile = String.valueOf(prop.getProperty("logfile"))+"/"+dateFormat.format(new Date())+".log";
+		logfile = String.valueOf(prop.getProperty("logfile"))+"/intercom.log";
 		 
 		try {
 			System.setOut(new PrintStream(logfile));
@@ -90,9 +95,9 @@ public class Main {
 		MyLogger.log(id, "Ring Thread");
 		new RingThread(compte, interval).start();
 		
-		while (LOOP) { 
+		/*while (LOOP) { 
 			MyLogger.log(id, "Loop...");
-
+*/
 			
 
 			// Par defaut, l'interphone classique est mis hors service
@@ -159,70 +164,24 @@ public class Main {
 			 * 
 			 * MyLogger.log("Mon IP : "+IP);
 			 */
+			
 
 			//Commande de deblocage unitaire pour test : gpio mode 1 out; gpio write 1 1; gpio mode 1 IN;
-			DetecteurSonnetteNew detectorNew = new DetecteurSonnetteNew();
+			//DetecteurSonnetteNew detectorNew = new DetecteurSonnetteNew();
 			// Lancement du detecteur de sonnerie
-			detectorNew.start();
+			//detectorNew.start();
 			// Si sortie alors sonnerie !!!
 
 			// Jouer la sonnerie
 			// sonnette.start();
 
-			//Auto Open Door
-			if(AUTOOPENDOOR){
-				new OpenDoorAuto(compte).start();
-			}
-
-			// IFTTT Notification
-			if(IFTTTNOTIF){
-				new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/"+iftttkey).start();
-			}
-
-			// IFTTT SMS
-			if(IFTTTSMS){
-				new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomSms/with/key/"+iftttkey).start();
-			}
-
-
-			//Appel sur appareil mobile
-			if (APPEL == true) {
-				// Recuperation des appareils connectes
-				MyLogger.log(id, "Recuperation des appareils connectes");
-				arrayApp = new ArrayList<Communicator>();
-				listAppA = RecupApp.getAppList();
-				if (listAppA == null || listAppA.size() == 0) {
-					MyLogger.log(id, "Aucun appareil connecte !!");
-				} else {
-					int size = listAppA.size();
-					MyLogger.log(id, size + " appareil(s) connecte(s)");
-
-					for (int i = 0; i < size; i++) {
-						MyLogger.log(id, listAppA.get(i).getPortSsh() + ":"
-								+ listAppA.get(i).getServer() + ":"
-								+ listAppA.get(i).getPort());
-						arrayApp.add(i, new Communicator(listAppA.get(i), 1000,
-								Double.parseDouble(args[1])));
-						arrayApp.get(i).start();
-					}
-
-					// Attente de la fin de tous les threads
-					for (int i = 0; i < arrayApp.size(); i++) {
-						try {
-							arrayApp.get(i).join();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					MyLogger.log(id, "Fin des appels");
-				}
-			}
-
 			// LOOP=false;
-		}
-		MyLogger.log(id, "Fin du porgramme");
+		//}
+		
+	DetectorGPIO gpioD = new DetectorGPIO();
+		gpioD.start();
+		
+		MyLogger.log(id, "Fin du main");	
 
 	}
 

@@ -37,6 +37,7 @@ public class DetecteurSonnetteNew {
 		Runtime runtime;
 		Process p;
 		InputStream ips;
+		String valeur;
 
 		try {
 			runtime = Runtime.getRuntime();
@@ -46,7 +47,7 @@ public class DetecteurSonnetteNew {
 				p = runtime.exec(gInit[i]);
 				ips = p.getErrorStream();
 				if (ips.read(buff) != -1) {
-					String valeur = new String(buff, "UTF-8");
+					valeur = new String(buff, "UTF-8");
 					MyLogger.log(id, valeur);
 				}
 
@@ -66,12 +67,12 @@ public class DetecteurSonnetteNew {
 			 * (new String(buff, "UTF-8").substring(0, 1)); } }
 			 */
 
-			Integer valeur = 0;
-			while (valeur == 0) {
+			Integer val = 0;
+			while (val == 0) {
 				p = runtime.exec(gRead);
 				ips = p.getInputStream();
 				if (ips.read(buff) != -1) {
-					valeur = new Integer(new String(buff, "UTF-8").substring(0,
+					val = new Integer(new String(buff, "UTF-8").substring(0,
 							1));
 					// MyLogger.log(id, valeur);
 				}
@@ -79,7 +80,7 @@ public class DetecteurSonnetteNew {
 				ips.close();
 			}
 
-			MyLogger.log(id, "Sonnerie detectee : " + valeur);
+			MyLogger.log(id, "Sonnerie detectee : " + val);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
