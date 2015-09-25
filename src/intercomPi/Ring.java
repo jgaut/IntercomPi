@@ -18,6 +18,7 @@ public class Ring {
 
 	Ring(){
 		this.id=Thread.currentThread().getId();
+		gpio = GpioFactory.getInstance();
 		myGpio = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW);
 	}
 	
