@@ -13,12 +13,14 @@ import com.pi4j.io.gpio.trigger.GpioCallbackTrigger;
 public class DetectorGPIO extends Thread{
 
 	// create gpio controller
-    GpioController gpio;
+    private GpioController gpio;
     // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
-    GpioPinDigitalInput myGpio;
+    private GpioPinDigitalInput myGpio;
     static boolean verrou = false;
+    private long id;
     
 	DetectorGPIO(){
+		this.id = Thread.currentThread().getId();
 		gpio = GpioFactory.getInstance();
 		gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, PinState.HIGH);
 		myGpio = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_DOWN);
@@ -30,14 +32,23 @@ public class DetectorGPIO extends Thread{
         // invocation on the user defined 'Callable' class instance
 		myGpio.addTrigger(new GpioCallbackTrigger(new Callable<Void>() {
             public Void call() throws Exception {
-            	MyLogger.log(Thread.currentThread().getId(), "Changement de valeur pour le pin 1");
-            	MyLogger.log(Thread.currentThread().getId(), myGpio.getState().toString());
+            	//MyLogger.log(Thread.currentThread().getId(), "Changement de valeur pour le pin 1");
+            	//MyLogger.log(Thread.currentThread().getId(), myGpio.getState().toString());
             	if(myGpio!=null && myGpio.getState().isHigh()){
-            		MyLogger.log(Thread.currentThread().getId(), "Sonnette !!");
             		if(BlockVerrou()){
+            			MyLogger.log(id, "Sonnette & verrou bloque");
+            			MyLogger.log(id, "Lancement du scenario...");	
             			Scenario scen = new Scenario();
                 		scen.launch();
+                		//Attente avant de relacher le verrou
+                		try {
+                			Thread.sleep(5000);
+                		} catch (InterruptedException e) {
+                			// TODO Auto-generated catch block
+                			e.printStackTrace();
+                		}
                 		ReleaseVerrou();
+            			MyLogger.log(Thread.currentThread().getId(), "Fin de scenario et verrou debloque");
             		}
             	}
                 return null;

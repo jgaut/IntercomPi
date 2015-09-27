@@ -21,7 +21,7 @@ public class MyLogger {
 		{
 		    FileWriter fw = new FileWriter (f, true);
 		 
-		    fw.write(dateFormat.format(new Date()) + id + "|" + getCallingMethod() + "|" + s + "\n");
+		    fw.write(dateFormat.format(new Date()) + id + "|" + Runtime.getRuntime().freeMemory() + "|" + getCallingMethod() + "|" + s + "\n");
 		    fw.close();
 		}
 		catch (IOException exception)

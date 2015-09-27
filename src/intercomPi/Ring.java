@@ -15,8 +15,6 @@ public class Ring {
     // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
     GpioPinDigitalOutput myGpio;
 
-	//private static boolean status=false;
-
 	Ring(){
 		this.id=Thread.currentThread().getId();
 		gpio = GpioFactory.getInstance();

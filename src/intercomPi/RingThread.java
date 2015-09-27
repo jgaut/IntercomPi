@@ -3,7 +3,9 @@ package intercomPi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
@@ -24,17 +26,20 @@ public class RingThread extends Thread{
 	public void run() {
 		this.id = Thread.currentThread().getId();
 		boolean res = false;
-		URL url;
-		HttpURLConnection conn;
+		HttpURLConnection conn=null;
 		BufferedReader rd;
 		String line;
 		MyLogger.log(id, "Thread loop");
 		Ring ring = new Ring();
+		Gson gson = new Gson(); 
+		Type type = new TypeToken<Boolean>() {
+		}.getType();
+		URL url=null;
 		
 		while(true){
 			try {
-				url = new URL("http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
 				//MyLogger.log(id, url.toString());
+				url = new URL("http://1-dot-intercomwebgae.appspot.com/od/?action=ring&compte="+compte);
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				rd = new BufferedReader(
@@ -42,8 +47,7 @@ public class RingThread extends Thread{
 				
 				while (conn.getResponseCode() == HttpURLConnection.HTTP_OK && (line = rd.readLine()) != null) {
 					//MyLogger.log(id, line);
-					res = new Gson().fromJson(line, new TypeToken<Boolean>() {
-					}.getType());
+					res = gson.fromJson(line, type);
 				}
 
 				//MyLogger.log(id, "Resultat : "+res);
@@ -54,11 +58,9 @@ public class RingThread extends Thread{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//Si auto open door prevu alors on met sur off la sonnette
-			//if(res){
-				//Ring.setRing(false);
-			//}
+
 			ring.setRing(!res);
+			
 			try {
 				Thread.sleep(interval);
 			} catch (InterruptedException e) {
