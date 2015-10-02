@@ -15,6 +15,21 @@ public class Scenario {
 
 	public void launch(){
 
+		//Auto Open Door
+		if(Main.AUTOOPENDOOR){
+			new OpenDoorAuto(Main.compte).start();
+		}
+
+		// IFTTT Notification
+		if(Main.IFTTTNOTIF){
+			new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/"+Main.iftttkey).start();
+		}
+
+		// IFTTT SMS
+		if(Main.IFTTTSMS){
+			new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomSms/with/key/"+Main.iftttkey).start();
+		}
+		
 		//Appel sur appareil mobile
 		if (Main.APPEL == true) {
 			// Recuperation des appareils connectes
@@ -48,21 +63,6 @@ public class Scenario {
 
 				MyLogger.log(id, "Fin des appels");
 			}
-		}
-
-		//Auto Open Door
-		if(Main.AUTOOPENDOOR){
-			new OpenDoorAuto(Main.compte).start();
-		}
-
-		// IFTTT Notification
-		if(Main.IFTTTNOTIF){
-			new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomNotif/with/key/"+Main.iftttkey).start();
-		}
-
-		// IFTTT SMS
-		if(Main.IFTTTSMS){
-			new IftttRequest("https://maker.ifttt.com/trigger/ringIntercomSms/with/key/"+Main.iftttkey).start();
 		}
 	}
 }

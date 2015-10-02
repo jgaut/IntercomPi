@@ -20,9 +20,9 @@
         <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
         <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/gson-2.3.1.jar"/>
         <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/pi4j-core.jar"/>
-    </path>
+    </path> 
     <target name="init">
-        <mkdir dir="bin"/>
+        <mkdir dir="bin"/> 
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src.link}">
                 <exclude name="**/*.java"/>
