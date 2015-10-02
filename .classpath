@@ -4,11 +4,11 @@
 	<classpathentry kind="con" path="/Users/jeremy/BitTorrent Sync/workspace/IntercomPi/bin"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-core.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-device.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-gpio-extension.jar"/>
-	<classpathentry kind="lib" path="ExterneJar/IntercomPi/pi4j-service.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/jsch-0.1.53.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="Externe/IntercomPi/pi4j-service.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

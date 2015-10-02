@@ -17,9 +17,9 @@
         <pathelement location="bin"/>
         <pathelement location="${JRE_LIB}"/>
         <path refid="Users/jeremy/Bittorent Sync/workspace/IntercomPi/bin.libraryclasspath"/>
-        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/jsch-0.1.53.jar"/>
-        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/gson-2.3.1.jar"/>
-        <pathelement location="../../workspace/IntercomPi/ExterneJar/IntercomPi/pi4j-core.jar"/>
+        <pathelement location="../../workspace/IntercomPi/Externe/IntercomPi/jsch-0.1.53.jar"/>
+        <pathelement location="../../workspace/IntercomPi/Externe/IntercomPi/gson-2.3.1.jar"/>
+        <pathelement location="../../workspace/IntercomPi/Externe/IntercomPi/pi4j-core.jar"/>
     </path> 
     <target name="init">
         <mkdir dir="bin"/> 
@@ -73,7 +73,7 @@
 			</jar>
 			
 	        <copy todir="jar">
-	            <fileset dir="ExterneJar"/>
+	            <fileset dir="Externe"/>
         </copy>
         
 	        	      <copy todir="jar/IntercomPi" file="conf.properties"/>
