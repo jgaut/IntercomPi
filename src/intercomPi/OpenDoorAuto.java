@@ -52,7 +52,7 @@ public class OpenDoorAuto extends Thread{
 		}
 
 		if(res){
-			new Door().open();
+			Door.open();
 		}
 
 	}

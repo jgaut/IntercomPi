@@ -67,6 +67,9 @@ public class Main {
 
 		String curDir = System.getProperty("user.dir");
 		MyLogger.log(id, "Le repertoire courant est: "+curDir);
+
+		MyLogger.log(id, "Initialisation de la porte");
+		Door.init();
 		
 		MyLogger.log(id, "Ring Thread");
 		RingThread ringT = new RingThread(compte, interval);
